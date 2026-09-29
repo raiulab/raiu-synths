@@ -1,0 +1,17 @@
+name: DSP tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build --target raiu1_tests -j 4
+      - run: ./build/plugins/raiu1/raiu1_tests
